@@ -100,19 +100,12 @@
 
                         <div style="background-color:black;padding: 20px;border-radius: 4px ">
 
-                            <h1> <span style="color: white">Welcome </span> {{$email}}</h1>
+                            <h1> <span style="color: white">Congratulations </span> {{$user->first_name}}</h1>
                             <ul class="breadcrumb">
-                                <li><h3><a href="/"> thanks for taking your time to register </a></h3></li>
-                                <br>
-                                <br>
-                                <li >
-                                    click the button below to complete your Registration <br> <br>
-                                    <a style="background-color: #fd961a; padding: 10px; color:white; border-radius: 3px"
-                                       href="{{env("APP_URL")}}{{$email}}/register">
-                                      Register
-                                    </a>
 
-                                </li>
+                                <br>
+                                <li> Your Registration is complete</li>
+
                             </ul>
                             <br>
                             <br>

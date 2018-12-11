@@ -19,7 +19,7 @@
     <div id=branding>
         <div id=branding-content>
 
-            <div class=title-content><a href=01-home-v1.html title>
+            <div class=title-content><a href=/ title>
                     <img class=site-logo src=/images/thumb.png alt/>
                     <h1 class=site-title> Reg </h1></a></div>
 

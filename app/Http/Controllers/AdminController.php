@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\AdminErrorJob;
+use App\Jobs\AdminSuccessJob;
 use Illuminate\Http\Request;
 use Sentinel;
 use App\User;
@@ -80,13 +82,14 @@ class AdminController extends Controller
         $user= User::find($id);
         Sentinel::update($user, ['approve' => 1, 'comments'=>$comments]);
 
-        Mail::send('emails.Admin.successMail', compact('user','comments'),
+        AdminSuccessJob::dispatch($user)->delay(now()->addSeconds(5));
+       /* Mail::send('emails.Admin.successMail', compact('user','comments'),
             function($message) use ($user){
                 $message->to($user->email);
                 $message->subject('Congratulations');
             }
-        );
-        return redirect('approved-applications')->with(['success'=> 'Registration Has been Rejected ']);
+        );*/
+        return redirect('approved-applications')->with(['success'=> 'Registration Has been Approve ']);
     }
 
     //reject application
@@ -96,12 +99,13 @@ class AdminController extends Controller
         Sentinel::update($user, ['approve' => 2, 'comments'=>$comments]);
 
         //send  mail to user
-        Mail::send('emails.Admin.errorMail', compact('user', 'comments'),
+        AdminErrorJob::dispatch($user)->delay(now()->addSeconds(5));
+        /*Mail::send('emails.Admin.errorMail', compact('user', 'comments'),
             function($message) use ($user){
                 $message->to($user->email);
                 $message->subject('We are sorry');
             }
-        );
+        );*/
         return redirect('rejected-applications')->with(['success'=> 'Registration Has been Rejected ']);
     }
 

@@ -11,11 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 //the home route
+Route::get('/test', 'PagesController@test');
+
 Route::get('/', 'PagesController@home');
 
 Route::get('/redirect', 'LoginController@redirectToProvider');

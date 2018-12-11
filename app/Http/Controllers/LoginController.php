@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\AdminRegJob;
+use App\Jobs\UserRegJob;
 use Illuminate\Http\Request;
 use Socialite;
 use App\User;
@@ -56,13 +58,13 @@ class LoginController extends Controller
 
 
 
-        //UserMailJob::dispatch($email)->delay(now()->addSeconds(5));
-        Mail::send('emails.registrationMail', compact('email'),
+        UserMailJob::dispatch($email)->delay(now()->addSeconds(5));
+        /*Mail::send('emails.registrationMail', compact('email'),
             function($message) use ($email){
                 $message->to($email);
                 $message->subject('Welcome To Car Reg');
             }
-        );
+        );*/
 
         return redirect('/')->with(['success'=> 'Success Check Your Email For More Information']);
     }
@@ -116,13 +118,14 @@ class LoginController extends Controller
             ]
         );
 
-        //UserMailJob::dispatch($email)->delay(now()->addSeconds(5));
-        Mail::send('emails.admin.registrationMail', compact('user'),
+        UserRegJob::dispatch($user)->delay(now()->addSeconds(5));
+        AdminRegJob::dispatch($user)->delay(now()->addSeconds(5));
+        /*Mail::send('emails.admin.registrationMail', compact('user'),
             function($message) use ($email){
                 $message->to("brianking319@gmail.com");
                 $message->subject('New User Registration');
             }
-        );
+        );*/
         return redirect('/')->with(['success'=> 'Your Registration is Complete']);
 
     }
